@@ -47,7 +47,7 @@ class ProjectListStatusBar extends React.Component {
   }
 
   render() {
-    let projects = this.state.projectsdata;
+    const projects = this.state.projectsdata;
     return (
       <div className="projects__statistics--container">
         <div className="statistics__data projects__projects">

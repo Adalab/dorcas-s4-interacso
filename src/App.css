@@ -17,7 +17,7 @@
 .header__container {
   display: flex;
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-weight: 900;
   letter-spacing: 3.4px;
   margin-bottom: 35px;
@@ -36,7 +36,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 75px 200px 200px 200px 200px;
   grid-gap: 2px;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-size: 48px;
   font-weight: 900;
   color: #ffffff;
@@ -49,8 +49,9 @@
 .day__container {
   background-color: #17517f;
   padding: 25px; }
-  .day__container.withEvent {
-    border-bottom: solid 10px #31cef2; }
+
+.day__container--with-event {
+  border-bottom: solid 10px #31cef2; }
 
 .day__notifications {
   font-size: 25px;
@@ -58,14 +59,18 @@
   display: inline-block;
   vertical-align: bottom;
   overflow: auto; }
-  .day__notifications .day__notifications-deadline.completed {
-    color: #7f7f7f; }
-  .day__notifications .day__notifications-deadline.pastDeadline {
-    color: #fa2913; }
-  .day__notifications .day__notifications-deadline.nearbyDeadline {
-    color: #f6c500; }
-  .day__notifications .day__notifications-deadline.gotSlack {
-    color: #31cef2; }
+
+.day__notifications-deadline--completed {
+  color: #7f7f7f; }
+
+.day__notifications-deadline--pastDeadline {
+  color: #fa2913; }
+
+.day__notifications-deadline--nearbyDeadline {
+  color: #f6c500; }
+
+.day__notifications-deadline--gotSlack {
+  color: #31cef2; }
 
 .deadline__point {
   width: 18px;
@@ -73,14 +78,18 @@
   display: inline-block;
   border-radius: 50%;
   margin-right: 10px; }
-  .deadline__point.completed {
-    background-color: #7f7f7f; }
-  .deadline__point.pastDeadline {
-    background-color: #fa2913; }
-  .deadline__point.nearbyDeadline {
-    background-color: #f6c500; }
-  .deadline__point.gotSlack {
-    background-color: #31cef2; }
+
+.deadline__point--completed {
+  background-color: #7f7f7f; }
+
+.deadline__point--pastDeadline {
+  background-color: #fa2913; }
+
+.deadline__point--nearbyDeadline {
+  background-color: #f6c500; }
+
+.deadline__point--gotSlack {
+  background-color: #31cef2; }
 
 .projects__statistics--container {
   display: grid;
@@ -130,7 +139,7 @@
 .chart-commits {
   background-color: #17517f;
   padding-top: 50px;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-weight: 900;
   font-size: 30px;
   padding-left: 30px; }
@@ -138,7 +147,7 @@
 .chart-hours {
   background-color: #17517f;
   padding-top: 50px;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-weight: 900;
   font-size: 30px;
   padding-left: 30px; }
@@ -168,7 +177,7 @@
 
 .tasks-title {
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-size: 30px;
   font-weight: 900;
   margin: 0; }
@@ -181,7 +190,7 @@
 
 .commits-title {
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-size: 30px;
   font-weight: 900;
   margin: 0; }
@@ -193,7 +202,7 @@
 .average__container-commits {
   background-color: #f5a623;
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   padding: 20px 50px 24px 50px; }
 
 .commits-number {
@@ -209,7 +218,7 @@
 .average__container-tasks {
   background-color: #3dcef0;
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   font-size: 30px;
   font-weight: 900;
   padding: 20px 50px 24px 50px;
@@ -231,7 +240,7 @@
   background-color: #17517f;
   color: #ffffff;
   text-align: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   padding: 30px 0 30px 0; }
 
 .asana-title {
@@ -245,7 +254,7 @@
   background-color: #17517f;
   color: #ffffff;
   text-align: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   padding: 30px 0 30px 0; }
 
 .git-title {
@@ -365,7 +374,7 @@
   grid-template-columns: 0.22fr 0.78fr;
   margin-top: 30px;
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", "sans-serif";
   height: 70px; }
 
 .footer__notif-details {
@@ -416,7 +425,7 @@ body {
   margin-left: 75px;
   margin-right: 75px;
   background-color: #061135;
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat"; }
 
 .App {
   width: 100%; }

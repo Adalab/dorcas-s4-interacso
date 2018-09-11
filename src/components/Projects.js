@@ -42,7 +42,7 @@ class Projects extends React.Component {
           }
         })
         .then(json => {
-          let projectsData = [];
+          const projectsData = [];
 
           for (var elemento in json.data[0].commitRank) {
             projectsData.push({
@@ -54,7 +54,7 @@ class Projects extends React.Component {
             projectsCharts: projectsData
           });
 
-          let hoursData = [];
+          const hoursData = [];
 
           for (var hoursProject in json.data[0].hourRank) {
             hoursData.push({

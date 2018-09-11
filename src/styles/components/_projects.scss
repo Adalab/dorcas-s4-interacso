@@ -55,7 +55,7 @@
 .chart-commits {
   background-color: $chartBackground;
   padding-top: 50px;
-  font-family: $montserrat;
+  font-family: $montserrat, $sansSe;
   font-weight: $bold;
   font-size: $large;
   padding-left: 30px;
@@ -64,7 +64,7 @@
 .chart-hours {
   background-color: $chartBackground;
   padding-top: 50px;
-  font-family: $montserrat;
+  font-family: $montserrat, $sansSe;
   font-weight: $bold;
   font-size: $large;
   padding-left: 30px;
