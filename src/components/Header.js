@@ -7,10 +7,6 @@ class Header extends React.Component {
         <h1 className="header__title--which-dashboard">
           {this.props.title}
         </h1>
-        <h1 className="header__title--which-project">
-          {this.props.separator} 
-          {this.props.subtitle}
-        </h1>
       </div>
     );
   }

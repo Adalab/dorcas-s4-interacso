@@ -28,46 +28,57 @@ class Team extends React.Component {
   }
 
   getTeamData() {
-    fetch(
-      this.props.apiService + 'team',
-      {
-        method: 'get',
-        withCredentials: true,
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Authorization': Env.token,
-          'Content-Type': 'application/json'
+    if(typeof Env !== "undefined" & Env.token !== "undefined") {
+      fetch(
+        this.props.apiService + 'team',
+        {
+          method: 'get',
+          withCredentials: true,
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Authorization': Env.token,
+            'Content-Type': 'application/json'
+          }
+        }
+      ).then(response => {
+        if(response.status === 401){
+          throw Error(response.statusText);
+        } else {
+          return response.json();
         }
       }
-    ).then(response => {
-      return response.json();
-    }
-  ).then(json => {
-    let teamData = [];
-    let memberPicsData = [];
-    let averageCommits = 0;
-    let averageTask = 0;
+    ).then(json => {
+      let teamData = [];
+      let memberPicsData = [];
+      let averageCommits = 0;
+      let averageTask = 0;
 
-    console.log(json.data)
-    json.data.forEach(person => {
-      // Recorro data del api y saco nombre y nro de tasks de cada uno
-      averageCommits = averageCommits + person.commits
-      averageTask = averageTask + person.tasks
-      teamData.push({
-        member: person.nombre,
-        tasks: person.tasks,
-        commits: person.commits
+      console.log(json.data)
+      json.data.forEach(person => {
+        // Recorro data del api y saco nombre y nro de tasks de cada uno
+        averageCommits = averageCommits + person.commits
+        averageTask = averageTask + person.tasks
+        teamData.push({
+          member: person.nombre,
+          tasks: person.tasks,
+          commits: person.commits
+        });
+        // Recorro data del api y saco la foto de cada uno
+        memberPicsData.push(person.photo);
       });
-      // Recorro data del api y saco la foto de cada uno
-      memberPicsData.push(person.photo);
+      this.setState({
+        weekChartData: teamData,
+        memberPics: memberPicsData,
+        averageTask: averageTask/json.data.length,
+        averageCommits: averageCommits/json.data.length
+      })
+    }).catch(error => {
+      alert("El token es incorrecto");
+      console.error(error);
     });
-    this.setState({
-      weekChartData: teamData,
-      memberPics: memberPicsData,
-      averageTask: averageTask/json.data.length,
-      averageCommits: averageCommits/json.data.length
-    })
-  });
+  } else {
+    alert("No esta usted autorizado");
+  }
 }
 
 getKillerInfo() {

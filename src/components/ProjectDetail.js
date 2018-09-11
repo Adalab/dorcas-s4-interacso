@@ -6,15 +6,13 @@ class ProjectDetail extends React.Component {
   constructor(props){
     super(props)
     this.texts = {
-      title: "Proyectos",
-      subtitle: "IKEA JD",
-      separator: " > "
+      title: "Proyectos > IKEA JD"
     }
   }
   render(){
      return (
       <div className="detailedprojects__container databoard">
-        <Header title={this.texts.title} separator={this.texts.separator} subtitle={this.texts.subtitle}/>
+        <Header title={this.texts.title} />
         <div className="detailedprojects__content">
           <div className="detailedprojects__statistics--container">
             <div className="statistics__data project__progress">

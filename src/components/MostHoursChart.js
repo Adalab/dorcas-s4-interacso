@@ -42,7 +42,8 @@ const axisSettings =
   },
   grid:{
     visible: false
-  }
+  },
+   maxValueMargin: 0.1,
 
 }
 const legendsSettings = {

@@ -16,11 +16,12 @@ const series  =
     label: {
       visible: true,
       backgroundColor: "none",
+      position: "outside",
       font: {
         color: "white",
         size: 25,
         family: "Open Sans"
-      }
+      },
     }
   },
 
@@ -42,6 +43,7 @@ const axisSettings =
   grid:{
     visible: false
   },
+  maxValueMargin: 0.1,
 }
 const legendsSettings = {
   visible: false
