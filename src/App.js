@@ -30,7 +30,8 @@ class App extends Component {
       averageCommits: 0,
       projectHours: {},
       projectCommits: 0,
-      projectTasks: {}
+      projectTasks: {},
+      refreshTime: 3000
     }
     this.showNextDashboard= this.showNextDashboard.bind(this);
     this.retrieveFromApi = this.retrieveFromApi.bind(this);
@@ -38,7 +39,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.effect= setInterval(this.showNextDashboard, 3000);
+    this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
   }
 
   updateState(object) {
@@ -86,7 +87,7 @@ class App extends Component {
         currentTransition: "none"
       });
 
-      this.effect= setInterval(this.showNextDashboard, 3000);
+      this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
 
     } else {
       this.setState({
@@ -109,7 +110,7 @@ class App extends Component {
       <div className= "visor" style={sliderStyles}>
         <Calendar datesToPrint={this.state.datesToPrint}
           calendarLoaded={this.state.calendarLoaded}
-          updateState={this.updateState}           
+          updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
          />
         <Projects projectsdata= {this.state.projectsdata}
@@ -130,7 +131,7 @@ class App extends Component {
           commitsWinner={this.state.commitsWinner}
           averageTask={this.state.averageTask}
           averageCommits={this.state.averageCommits}
-          updateState={this.updateState}           
+          updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
         />
         <Calendar datesToPrint={this.state.datesToPrint}
