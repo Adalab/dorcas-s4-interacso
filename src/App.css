@@ -368,6 +368,17 @@
   padding: 15.5px;
   border-bottom: 1px solid #17517f; }
 
+.chart__project--legend--completed {
+  color: #f5a623; }
+
+.chart__project--legend--pending {
+  color: #3dcef0; }
+
+.chart__project--legend {
+  position: relative;
+  top: -500px;
+  left: 50px; }
+
 .footer__container {
   display: grid;
   grid-template-columns: 0.22fr 0.78fr;

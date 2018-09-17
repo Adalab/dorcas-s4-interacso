@@ -58,7 +58,20 @@
   flex-direction: column;
   list-style: none;
 }
-.top-contributors__list--element{
+.top-contributors__list--element {
   padding: 15.5px;
   border-bottom: 1px solid $chartTasks;
+}
+
+.chart__project--legend--completed {
+  color: $statisticsDataTotalHours;
+}
+.chart__project--legend--pending {
+  color: $statisticsDataProgress;
+}
+
+.chart__project--legend {
+  position: relative;
+  top: -500px;
+  left: 50px;
 }

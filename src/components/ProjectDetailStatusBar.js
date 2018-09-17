@@ -4,22 +4,19 @@ class ProjectDetailBar extends React.Component {
   constructor(props){
     super(props);
   }
-  
-  
-  componentDidMount() {
-    this.props.retrieveFromApi("projects/650687808730806").then(apiResponse => {
-      this.props.updateState({projectHours: apiResponse.hours})
-      this.props.updateState ({projectCommits: apiResponse})
-      this.props.updateState({projectTasks: apiResponse.tasks})
-    });
-  }
+
 
   render() {
     const hours= (this.props.projectHours)
     const commits= (this.props.projectCommits)
     const tasks= (this.props.projectTasks)
     const percentage = Math.round(
-      this.props.projectTasks.completed / this.props.projectTasks.total*100 )
+      this.props.projectTasks.completed / this.props.projectTasks.total*100
+    )
+    let total = tasks.total;
+    if (total == 0) {
+      total = 1;
+    }
     return (
       <div className= "detailed-projects__statistics--container">
         <div className= "statistics__data project__progress">
@@ -40,7 +37,7 @@ class ProjectDetailBar extends React.Component {
           <div className= "data__tags"><p>horas semana</p></div>
         </div>
         <div className= "statistics__data project__commits">
-          <div className= "data__number"><p>{commits.commits}</p></div>
+          <div className= "data__number"><p>{commits}</p></div>
           <div className= "data__tags"><p>commits</p></div>
         </div>
       </div>
