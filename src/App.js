@@ -31,6 +31,7 @@ class App extends Component {
       projectHours: {},
       projectCommits: 0,
       projectTasks: {},
+      refreshTime: 3000,
       projects: [],
     }
     this.showNextDashboard = this.showNextDashboard.bind(this);
@@ -39,14 +40,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.effect= setInterval(this.showNextDashboard, 3000);
+    this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
     this.retrieveFromApi("projects/list").then(apiResponse => {
       this.setState({
         totalDataboards: this.state.totalDataboards + apiResponse.total,
         projects: apiResponse.data
       });
     });
-
   }
 
   updateState(object) {
@@ -95,7 +95,7 @@ class App extends Component {
         currentTransition: "none"
       });
 
-      this.effect= setInterval(this.showNextDashboard, 3000);
+      this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
 
     } else {
       this.setState({
