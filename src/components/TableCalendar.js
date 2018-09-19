@@ -8,6 +8,7 @@ class TableCalendar extends React.Component {
     };
     this.calendarContainer = React.createRef();
   }
+
   componentDidUpdate() {
     if (this.state.animationStarted === false) {
       const withEvents = this.calendarContainer.current.querySelectorAll(
@@ -37,6 +38,7 @@ class TableCalendar extends React.Component {
       // });
     }
   }
+
   animate(elements) {
     const visibleTime = 2500;
     const delay = 500;
@@ -52,12 +54,14 @@ class TableCalendar extends React.Component {
       });
     }, animationTotalTime);
   }
+
   fadeIn(element, time) {
     setTimeout(() => {
       element.classList.remove("display-off");
       element.classList.remove("opacity-off");
     }, time);
   }
+
   fadeOut(element, time) {
     setTimeout(() => {
       element.classList.add("opacity-off");
@@ -77,20 +81,18 @@ class TableCalendar extends React.Component {
       );
       let dayContainerClass = "day__container day__container" + colorContainer;
       if (dateToPrint.events.length !== 0) {
-        dayContainerClass =
-          "day__container day__container--with-event day__container" +
-          colorContainer;
+        dayContainerClass = "day__container day__container--with-event day__container" + colorContainer;
       }
       datesInHTML.push(
-        <div className={dayContainerClass} key={dateToPrint.label}>
-          <div className={"day__label day__label" + colorContainer}>
+        <div className = {dayContainerClass} key = {dateToPrint.label}>
+          <div className = {"day__label day__label" + colorContainer}>
             {dateToPrint.label}
           </div>
-          <div className="day__notifications">
-            <div className="notifications__container--events">
+          <div className = "day__notifications">
+            <div className = "notifications__container--events">
               {this.makeEventsStructure(dateToPrint.events)}
             </div>
-            <div className="notifications__container--deadlines">
+            <div className = "notifications__container--deadlines">
               {this.makeDeadlinesStructure(
                 dateToPrint.deadlines,
                 dateToPrint.dateObject,
@@ -102,12 +104,12 @@ class TableCalendar extends React.Component {
       );
     });
     return (
-      <div className="calendar__container" ref={this.calendarContainer}>
-        <div className="calendar__weekday">Lunes</div>
-        <div className="calendar__weekday">Martes</div>
-        <div className="calendar__weekday">Miércoles</div>
-        <div className="calendar__weekday">Jueves</div>
-        <div className="calendar__weekday">Viernes</div>
+      <div className = "calendar__container" ref = {this.calendarContainer}>
+        <div className = "calendar__weekday">Lunes</div>
+        <div className = "calendar__weekday">Martes</div>
+        <div className = "calendar__weekday">Miércoles</div>
+        <div className = "calendar__weekday">Jueves</div>
+        <div className = "calendar__weekday">Viernes</div>
         {datesInHTML}
       </div>
     );
@@ -123,8 +125,8 @@ class TableCalendar extends React.Component {
       }
       eventsInHTML.push(
         <div
-          className={"day__notifications-event " + hiddenClass}
-          key={"events_" + index}
+          className = {"day__notifications-event " + hiddenClass}
+          key = {"events_" + index}
         >
           {event}
         </div>
@@ -148,19 +150,8 @@ class TableCalendar extends React.Component {
         todayDate
       );
       deadlinesInHTML.push(
-        <div
-          className={
-            hiddenClass +
-            "day__notifications-deadline  day__notifications-deadline" +
-            colorClass
-          }
-          key={"dealine_" + index}
-        >
-          <span
-            className={
-              hiddenClass + "deadline__point deadline__point" + colorClass
-            }
-          />
+        <div className = {hiddenClass + "day__notifications-deadline  day__notifications-deadline" + colorClass} key = {"dealine_" + index}>
+          <span className = {hiddenClass + "deadline__point deadline__point" + colorClass}/>
           {deadline.text}
         </div>
       );
@@ -187,6 +178,7 @@ class TableCalendar extends React.Component {
       }
     }
   }
+
   getTodayColor(dateObject, todayDate) {
     if (
       this.props.formatDate(dateObject) === this.props.formatDate(todayDate)
@@ -199,13 +191,14 @@ class TableCalendar extends React.Component {
 
   nextWeekAndRestOfThisWeek(todayDate) {
     const nextWeekAndRestOfThisWeek = 6 - todayDate.getDay() + 1 + 7;
-    const nextWeekInMiliseconds =
-      nextWeekAndRestOfThisWeek * this.props.milisecondsInADay;
+    const nextWeekInMiliseconds = nextWeekAndRestOfThisWeek * this.props.milisecondsInADay;
     return nextWeekInMiliseconds;
   }
 
   render() {
-    return <React.Fragment>{this.makeCalendarStructure()}</React.Fragment>;
+    return <React.Fragment>
+      {this.makeCalendarStructure()}
+    </React.Fragment>;
   }
 }
 

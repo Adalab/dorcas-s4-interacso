@@ -4,24 +4,27 @@ import MemberPhotosBar from './MemberPhotosBar'
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.compact.css';
 
-const settings=
+const settings =
 {
   type: "bar",
   argumentField: "member",
   color: "green"
 };
-const series=
+
+const series =
 [
   {
     color: "#57718D",
     valueField: "commits"
   },
 ];
-const size=
+
+const size =
 {
   height: 12
 }
-const axisSettings=
+
+const axisSettings =
 {
   label: {
     overlappingBehavior: "none",
@@ -31,27 +34,28 @@ const axisSettings=
     visible: false
   }
 }
-const legendsSettings= {
+
+const legendsSettings = {
   visible: false
 }
 
 class WeekCommitsChart extends React.Component {
 
-  render(){
+  render() {
     return (
-      <div className= "dashboard chart__commits">
-        <p className= "commits__title">Commits Semana</p>
-        <div className= "">
+      <div className = "dashboard chart__commits">
+        <p className = "commits__title">Commits Semana</p>
+        <div className = "">
           <Chart
-            dataSource= {this.props.data}
-            commonSeriesSettings= {settings}
-            series= {series}
-            size= {size}
-            argumentAxis= {axisSettings}
-            valueAxis= {axisSettings}
-            legend= {legendsSettings}
+            dataSource = {this.props.data}
+            commonSeriesSettings = {settings}
+            series = {series}
+            size = {size}
+            argumentAxis = {axisSettings}
+            valueAxis = {axisSettings}
+            legend = {legendsSettings}
           />
-          <MemberPhotosBar memberPics= {this.props.memberPics}/>
+          <MemberPhotosBar memberPics = {this.props.memberPics}/>
         </div>
       </div>
     );

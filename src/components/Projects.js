@@ -15,26 +15,26 @@ class Projects extends React.Component {
 
   render() {
     return (
-      <div className= "projects__container databoard">
-        <Header title= {this.texts.title} />
-        <ProjectListStatusBar projectsdata= {this.props.projectsdata}
-          updateState={this.props.updateState}
-          retrieveFromApi={this.props.retrieveFromApi}
+      <div className = "projects__container databoard">
+        <Header title = {this.texts.title} />
+        <ProjectListStatusBar projectsdata = {this.props.projectsdata}
+          updateState = {this.props.updateState}
+          retrieveFromApi = {this.props.retrieveFromApi}
         />
-        <div className= "statistics__chart">
-          <div className= "chart__details">
+        <div className = "statistics__chart">
+          <div className = "chart__details">
             <p>Proyectos más activos (commits)</p>
-            <MostCommitsChart data= {this.props.projectsCharts} />
+            <MostCommitsChart data = {this.props.projectsCharts} />
           </div>
-          <div className= "chart__details">
+          <div className = "chart__details">
             <p>Proyectos más activos (horas)</p>
-            <MostHoursChart hours= {this.props.hoursCharts} />
+            <MostHoursChart hours = {this.props.hoursCharts} />
           </div>
         </div>
         <Notifications
-          currentNotificationsTransition={this.props.currentNotificationsTransition}
-          notifications={this.props.notifications}
-          currentNotifications={this.props.currentNotifications}
+          currentNotificationsTransition = {this.props.currentNotificationsTransition}
+          notifications = {this.props.notifications}
+          currentNotifications = {this.props.currentNotifications}
          />
       </div>
     );

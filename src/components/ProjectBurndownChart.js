@@ -1,12 +1,13 @@
 import React from 'react';
 import { Chart } from 'devextreme-react';
 
-const settings=
+const settings =
 {
   type: "line",
   argumentField: "weekDay",
   color: "green"
 };
+
 const series =
 [
   {
@@ -19,12 +20,14 @@ const series =
     valueField: "created",
   },
 ];
-const size=
+
+const size =
 {
   height: 300,
   width: 1000
 }
-const axisSettings=
+
+const axisSettings =
 {
   label: {
     overlappingBehavior: "rotate",
@@ -39,23 +42,24 @@ const axisSettings=
   },
   maxValueMargin: 0.1,
 }
-const legendsSettings= {
+
+const legendsSettings = {
   visible: false
 }
 
 class ProjectBurndownChart extends React.Component {
-  render(){
+  render() {
     return (
-      <div className= "statistics__charts">
-        <div className= "chart__project--completed-tasks">
+      <div className = "statistics__charts">
+        <div className = "chart__project--completed-tasks">
           <Chart
-            dataSource= {this.props.data}
-            commonSeriesSettings= {settings}
-            series= {series}
-            size= {size}
-            argumentAxis= {axisSettings}
-            valueAxis= {axisSettings}
-            legend= {legendsSettings}
+            dataSource = {this.props.data}
+            commonSeriesSettings = {settings}
+            series = {series}
+            size = {size}
+            argumentAxis = {axisSettings}
+            valueAxis = {axisSettings}
+            legend = {legendsSettings}
           />
         </div>
       </div>

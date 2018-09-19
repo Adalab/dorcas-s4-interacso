@@ -6,7 +6,6 @@
   color: $titles;
   font-family: $montserrat, $sansSe;
   overflow: hidden;
-  // height: 70px;
 }
 
 .footer__notif--container {
@@ -23,7 +22,7 @@
   background-color: $footerDetails;
   height: 70px;
 }
-.footer__bell{
+.footer__bell {
   text-align: center;
 }
 .footer__notif--number {
@@ -35,20 +34,24 @@
   align-items: center;
   justify-content: center;
 }
+
 .detail__notif--category {
   display: flex;
   font-size: $normal;
   font-weight: $semibold;
   letter-spacing: 1.8px;
 }
+
 .detail__notif--type {
   margin-left: 3px;
 }
+
 .detail__notif--content {
   font-size: $normal;
   font-weight: $semibold;
   letter-spacing: 1.8px;
 }
+
 .detail__notif--time {
   font-size: $small;
   font-weight: $regular;
