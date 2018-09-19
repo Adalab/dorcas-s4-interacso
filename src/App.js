@@ -145,7 +145,8 @@ getCalendarDates() {
         label: calendarDate.getDate(),
         events: [],
         deadlines: []
-      })
+      }
+    )
       calendarDate= this.incrementDaysInMiliseconds(calendarDate, 1);
       if (weekDays === 4){
         calendarDate= this.incrementDaysInMiliseconds(calendarDate, 2);

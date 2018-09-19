@@ -15,9 +15,7 @@ class TableCalendar extends React.Component {
     );
     if (this.state.animationStarted === false && withEvents.length > 0) {
       withEvents.forEach(withEvent => {
-        const notificationEvents = withEvent.querySelectorAll(
-          ".day__notifications-event"
-        );
+        const notificationEvents = withEvent.querySelectorAll(".day__notifications-event");
         if (notificationEvents.length > 1) {
           this.animate(notificationEvents);
         }
@@ -26,9 +24,7 @@ class TableCalendar extends React.Component {
         ".day__container"
       );
       withDeadline.forEach(withDeadline => {
-        const notificationDeadline = withDeadline.querySelectorAll(
-          ".day__notifications-deadline"
-        );
+        const notificationDeadline = withDeadline.querySelectorAll(".day__notifications-deadline");
         if (notificationDeadline.length > 1) {
           this.animate(notificationDeadline);
         }
@@ -75,10 +71,7 @@ class TableCalendar extends React.Component {
     let datesInHTML = [];
     const todayDate = new Date();
     this.props.datesToPrint.forEach(dateToPrint => {
-      const colorContainer = this.getTodayColor(
-        dateToPrint.dateObject,
-        todayDate
-      );
+      const colorContainer = this.getTodayColor(dateToPrint.dateObject, todayDate);
       let dayContainerClass = "day__container day__container" + colorContainer;
       if (dateToPrint.events.length !== 0) {
         dayContainerClass = "day__container day__container--with-event day__container" + colorContainer;
@@ -124,10 +117,7 @@ class TableCalendar extends React.Component {
         hiddenClass = "opacity-off display-off ";
       }
       eventsInHTML.push(
-        <div
-          className = {"day__notifications-event " + hiddenClass}
-          key = {"events_" + index}
-        >
+        <div className = {"day__notifications-event " + hiddenClass} key = {"events_" + index}>
           {event}
         </div>
       );
