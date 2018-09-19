@@ -7,7 +7,7 @@ class Notifications extends React.Component {
   super(props);
     this.state = {
       currentNotifications: 0,
-      rotateNotifications: 1500
+      rotateNotifications: 15000
     }
     this.animateNotifications = this.animateNotifications.bind(this)
   }
