@@ -15,12 +15,8 @@ class Calendar extends React.Component {
       <div className = "databoard">
         <Header title = {this.texts.title} />
         <TableCalendar
-          identifier = {this.props.identifier}
           milisecondsInADay = {this.props.milisecondsInADay}
           datesToPrint = {this.props.datesToPrint}
-          calendarResponseApi = {this.props.calendarResponseApi}
-          setDatesNotifications = {this.props.setDatesNotifications}
-          retrieveFromApi  = {this.props.retrieveFromApi}
           formatDate = {this.props.formatDate}
         />
       </div>
