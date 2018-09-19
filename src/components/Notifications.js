@@ -31,7 +31,7 @@ class Notifications extends React.Component {
   }
 
   render() {
-    if (this.props.notifications.length == 0) {
+    if (this.props.notifications.length === 0) {
       return (
         <div className= "footer__container">
           <div className= "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
@@ -44,11 +44,11 @@ class Notifications extends React.Component {
         <div className= "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
         </div>
           <div className= "footer__notif--container" style= {{top: `-${this.state.currentNotifications * 70}px`}}>
-            {this.props.notifications.map(notification =>
-              <div className= "footer__notif-details">
+            {this.props.notifications.map((notification, index) =>
+              <div className= "footer__notif-details" key={"notification" + index}>
                 <div className= "detail__notif--category">
                   <div className= "footer__bell">
-                    <img src= {bell} className= "bell" />
+                    <img src= {bell} className= "bell" alt="bell icon" />
                   </div>
                   <p className= "detail__notif--type">{notification.category}</p>
                 </div>
