@@ -102,31 +102,30 @@ class ProjectDetail extends React.Component {
 
   render() {
     return (
-      <div className="detailedprojects__container databoard">
-        <Header title={this.texts.title} />
-        <div className="detailedprojects__content">
+      <div className = "detailedprojects__container databoard">
+        <Header title = {this.texts.title} />
+        <div className = "detailedprojects__content">
           <ProjectsDetailStatusBar
-            projectId={this.props.projectId}
-            projectHours={this.state.projectData.hours}
-            projectCommits={this.state.projectData.commits}
-            projectTasks={this.state.projectData.tasks}
+            projectId = {this.props.projectId}
+            projectHours = {this.state.projectData.hours}
+            projectCommits = {this.state.projectData.commits}
+            projectTasks = {this.state.projectData.tasks}
           />
-          <div className="statistics__charts">
+          <div className = "statistics__charts">
             <div>
-              <ProjectBurndownChart data={this.state.projectTasks} />
+              <ProjectBurndownChart data = {this.state.projectTasks} />
               <LegendProjectDetail
-                totalCompleted={this.state.totalCompleted}
-                totalPending={this.state.totalPending}
+                totalCompleted = {this.state.totalCompleted}
+                totalPending = {this.state.totalPending}
               />
             </div>
-
             <ProjectTopContributors
-              contributors={this.state.projectData.contributors}
+              contributors = {this.state.projectData.contributors}
             />
           </div>
           <Notifications
-            notifications={this.props.notifications}
-            currentNotifications={this.props.currentNotifications}
+            notifications = {this.props.notifications}
+            currentNotifications = {this.props.currentNotifications}
           />
         </div>
       </div>

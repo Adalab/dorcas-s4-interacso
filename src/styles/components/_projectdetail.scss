@@ -1,53 +1,64 @@
-.project__progress{
+.project__progress {
   background-color: $statisticsDataProgress;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.project__hours{
+
+.project__hours {
  background-color: $statisticsDataTotalHours;
 }
-.project__hours--week{
+
+.project__hours--week {
   background-color: $statisticsDataHoursPerWeek;
 }
-.project__commits{
+
+.project__commits {
   background-color: $statisticsDataProjectCommit;
 }
-.progress__integer--completed{
+
+.progress__integer--completed {
   color: $numbers;
   font-size: $normal;
   font-weight: $medium;
 }
-.detailed-projects__statistics--container{
+
+.detailed-projects__statistics--container {
   display: grid;
   grid-template-columns: 2fr 1fr 0.6fr 0.8fr;
   grid-template-rows: 134px;
   grid-gap: 27px;
   margin-bottom: 36px;
 }
+
 .statistics__charts {
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
 }
-.top-contributors__chart{
+
+.top-contributors__chart {
   margin: 31px;
 }
+
 .chart__project--completed-tasks {
   height: 588px;
   background-color: $chartTasks;
   margin-right: 25px;
 }
+
 .chart__project--top-contributors {
   height: 588px;
   background-color: $chartContributors;
 }
-.top-contributors__title{
+
+.top-contributors__title {
   font-weight: $bold;
   font-size: $large;
   letter-spacing: 2.1px;
   color: $paragraph;
 }
-.top-contributors__list{
+
+.top-contributors__list {
   margin-top: 22px;
   font-weight: $semibold;
   font-size: $large;
@@ -58,6 +69,7 @@
   flex-direction: column;
   list-style: none;
 }
+
 .top-contributors__list--element {
   padding: 15.5px;
   border-bottom: 1px solid $chartTasks;
@@ -69,6 +81,7 @@
 .chart__project--legend--completed {
   color: $statisticsDataTotalHours;
 }
+
 .chart__project--legend--pending {
   color: $statisticsDataProgress;
 }
@@ -79,6 +92,6 @@
   left: 50px;
 }
 
-.top-contributors__list--name{
+.top-contributors__list--name {
   margin-left: 15px;
 }

@@ -1,38 +1,47 @@
-.projects__statistics--container{
+.projects__statistics--container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 0.6fr 0.8fr;
   grid-template-rows: auto;
   grid-gap: 27px;
 }
+
 .projects__projects {
   background-color: $statisticsDataProjects;
 }
+
 .projects__tasks {
   background-color: $statisticsDataTasks;
 }
+
 .projects__weeks {
   background-color: $statisticsDataWeeks;
 }
+
 .projects__commits {
   background-color: $statisticsDataCommits;
 }
+
 .projects__hours {
   background-color: $statisticsDataHours;
 }
+
 .data__number {
   color: $numbers;
   font-size: $xxx_large;
   font-weight: $semibold;
   margin: 0;
 }
+
 .data__tags {
   color: $paragraph;
   font-size: $normal;
   font-weight: $medium;
 }
+
 .statistics__data {
   padding: 20px;
 }
+
 .statistics__chart {
   width: auto;
   height: 535px;
@@ -43,6 +52,7 @@
   grid-gap: 90px;
   margin-top: 70px;
 }
+
 .chart__details {
   background-color: $chartBackground;
   padding-top: 50px;
@@ -51,6 +61,7 @@
   font-size: $large;
   padding-left: 30px;
 }
+
 .dx-visibility-change-handler {
   margin-top: 100px;
 }

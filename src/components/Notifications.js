@@ -33,27 +33,27 @@ class Notifications extends React.Component {
   render() {
     if (this.props.notifications.length === 0) {
       return (
-        <div className= "footer__container">
-          <div className= "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
+        <div className = "footer__container">
+          <div className = "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
           </div>
         </div>
       )
     }
     return (
-      <div className= "footer__container">
-        <div className= "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
+      <div className = "footer__container">
+        <div className = "footer__notif--number">NOTIFICACIONES ({this.props.notifications.length})
         </div>
-          <div className= "footer__notif--container" style= {{top: `-${this.state.currentNotifications * 70}px`}}>
+          <div className = "footer__notif--container" style= {{top: `-${this.state.currentNotifications * 70}px`}}>
             {this.props.notifications.map((notification, index) =>
-              <div className= "footer__notif-details" key={"notification" + index}>
-                <div className= "detail__notif--category">
-                  <div className= "footer__bell">
-                    <img src= {bell} className= "bell" alt="bell icon" />
+              <div className = "footer__notif-details" key = {"notification" + index}>
+                <div className = "detail__notif--category">
+                  <div className = "footer__bell">
+                    <img src = {bell} className = "bell" alt = "bell icon" />
                   </div>
-                  <p className= "detail__notif--type">{notification.category}</p>
+                  <p className = "detail__notif--type">{notification.category}</p>
                 </div>
-                <div className= "detail__notif--content">{notification.text}</div>
-                <div className= "detail__notif--time">{notification.from}</div>
+                <div className = "detail__notif--content">{notification.text}</div>
+                <div className = "detail__notif--time">{notification.from}</div>
               </div>
             )}
           </div>

@@ -12,18 +12,18 @@ class ProjectTopContributors extends React.Component {
       }
     });
     return (
-      <div className="chart__project--top-contributors">
-        <div className="top-contributors__chart">
-          <p className="top-contributors__title">Top contributors</p>
-          <div className="top-contributors__list">
-            <ul className="top-contributors__list">
+      <div className = "chart__project--top-contributors">
+        <div className = "top-contributors__chart">
+          <p className = "top-contributors__title">Top contributors</p>
+          <div className = "top-contributors__list">
+            <ul className = "top-contributors__list">
               {orderContributors.map((contributor, index) =>
-                <li className="top-contributors__list--element" key={'contributors_' + index}>
-                  <span className="top-contributors__list--number">
+                <li className = "top-contributors__list--element" key = {'contributors_' + index}>
+                  <span className = "top-contributors__list--number">
                     <span>#{index+1}</span>
-                    <span className="top-contributors__list--name">{contributor.name}</span>
+                    <span className = "top-contributors__list--name">{contributor.name}</span>
                   </span>
-                  <span className="top-contributors__list--commits">
+                  <span className = "top-contributors__list--commits">
                     {contributor.commits}
                   </span>
                 </li>

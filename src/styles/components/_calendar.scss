@@ -10,64 +10,81 @@
   height: 100%;
   margin: 0 auto;
 }
+
 .calendar__weekday {
   margin-left: 25px;
 }
+
 .day__container {
   background-color: $calendarDayContainer;
   padding: 25px;
   box-sizing: border-box;
 }
+
 .day__container--today {
   border: 10px solid $selectedDay;
 }
+
 .day__container--with-event {
   border-bottom: solid 10px $eventDetail;
 }
+
 .day__notifications {
   font-size: $normal;
   color: $futureEvent;
   display: inline-block;
   vertical-align: bottom;
 }
+
 .notifications__container--events {
   height: 50px;
 }
+
 .notifications__container--deadlines {
   height: 50px;
 }
+
 .day__notifications-event {
   display: inline-block;
   opacity: 1;
   transition: opacity 0.5s;
 }
+
 .day__notifications-deadline {
   display: inline-block;
   opacity: 1;
   transition: opacity 0.5s;
 }
+
 .opacity-off {
   opacity: 0;
   transition: opacity 0.5s;
 }
+
 .display-off {
   display: none;
 }
+
 .day__label--today {
   color: $selectedDay;
 }
+
 .day__notifications-deadline--completed {
   color: $deadlineFinished;
 }
+
 .day__notifications-deadline--past-deadline {
   color: $deadlineUnfinished;
 }
+
 .day__notifications-deadline--nearby-deadline {
   color: $deadlineClose;
 }
+
 .day__notifications-deadline--got-slack {
   color: $futureDeadline;
 }
+
 .deadline__point {
   width: 18px;
   height: 18px;
@@ -77,15 +94,19 @@
   opacity: 1;
   transition: opacity 0.5s;
 }
+
 .deadline__point--completed {
   background-color: $deadlineFinished;
 }
+
 .deadline__point--past-deadline {
   background-color: $deadlineUnfinished;
 }
+
 .deadline__point--nearby-deadline {
   background-color: $deadlineClose;
 }
+
 .deadline__point--got-slack {
   background-color: $futureDeadline;
 }
