@@ -46,7 +46,9 @@ class Team extends React.Component {
             <p className= "killer__detail">Commits esta semana</p>
           </div>
         </div>
-        <Notifications />
+        <Notifications
+          notifications={this.props.notifications}
+          currentNotifications={this.props.currentNotifications} />
       </div>
     );
   }

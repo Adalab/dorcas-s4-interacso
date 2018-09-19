@@ -412,17 +412,24 @@
 .footer__container {
   display: grid;
   grid-template-columns: 0.22fr 0.78fr;
+  grid-template-rows: 70px;
   margin-top: 30px;
   color: #ffffff;
   font-family: "Montserrat", "sans-serif";
-  height: 70px; }
+  overflow: hidden; }
+
+.footer__notif--container {
+  position: relative;
+  top: 0;
+  transition: all 0.5s ease 0s; }
 
 .footer__notif-details {
   display: grid;
   grid-template-columns: 0.22fr 0.56fr 0.22fr;
   align-items: center;
   padding-left: 32px;
-  background-color: #32a4e3; }
+  background-color: #32a4e3;
+  height: 70px; }
 
 .footer__bell {
   text-align: center; }

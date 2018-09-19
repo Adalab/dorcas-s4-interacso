@@ -7,6 +7,7 @@ import Env from './data/.env.json';
 import './App.css';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.compact.css';
+import moment from "moment";
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +37,9 @@ class App extends Component {
       projectCommits: 0,
       projectTasks: {},
       projects: [],
-      refreshTime: 15000
+      refreshTime: 15000,
+      notificationsRefreshTime: 30000,
+      notifications: []
     }
     if (
       typeof this.state.datesToPrint !== 'undefined' &&
@@ -48,10 +51,14 @@ class App extends Component {
     this.retrieveFromApi = this.retrieveFromApi.bind(this);
     this.updateState = this.updateState.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.loadNotifications = this.loadNotifications.bind(this);
   }
 
   componentDidMount() {
+    this.loadNotifications();
     this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
+    setInterval(this.loadNotifications, this.state.notificationsRefreshTime);
+    setInterval(this.animateNotifications, this.state.rotateNotifications);
     this.retrieveFromApi("projects/list").then(projectListJson => {
       if (typeof projectListJson !== "undefined") {
         this.setState({
@@ -206,6 +213,30 @@ getCalendarDates(datesToPrint) {
     return startDate;
   }
 
+  //NOTIFICACIONES
+  loadNotifications() {
+    const filterTime = 1800000000000000;
+    this.retrieveFromApi('notifications').then(projectListJson => {
+      const orderedNotifications = projectListJson.data.sort((c1, c2) =>
+      moment(c1.created_at) < (c2.created_at)
+    );
+    const doneNotifications = [];
+    orderedNotifications.forEach((notification) => {
+      if (moment().diff(moment(notification.created_at)) > filterTime) {
+        return;
+      }
+      doneNotifications.push({
+        category: notification.category,
+        text: notification.text,
+        from: moment(notification.created_at).fromNow(),
+      });
+    });
+    this.setState({
+      notifications: doneNotifications
+    });
+    });
+  }
+
   //PROJECTS
 
   saveCommitsAndHours(projectsResponseApi) {
@@ -305,9 +336,10 @@ getCalendarDates(datesToPrint) {
         <Projects projectsdata={this.state.projectsdata}
           projectsCharts={this.state.projectsCharts}
           hoursCharts={this.state.hoursCharts}
-          projectsResponseApi={this.state.projectsResponseApi}
           updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
+          notifications={this.state.notifications}
+          currentNotifications={this.state.currentNotifications}
         />
 
         {this.state.projects.map((project, index) =>
@@ -320,6 +352,8 @@ getCalendarDates(datesToPrint) {
             retrieveFromApi={this.retrieveFromApi}
             projectId={project.gid}
             projectName={project.name}
+            notifications={this.state.notifications}
+            currentNotifications={this.state.currentNotifications}
           />
         )}
 
@@ -333,6 +367,8 @@ getCalendarDates(datesToPrint) {
           averageCommits={this.state.averageCommits}
           updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
+          notifications={this.state.notifications}
+          currentNotifications={this.state.currentNotifications}
         />
 
         <Calendar

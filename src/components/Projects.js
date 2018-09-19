@@ -31,7 +31,11 @@ class Projects extends React.Component {
             <MostHoursChart hours= {this.props.hoursCharts} />
           </div>
         </div>
-        <Notifications />
+        <Notifications
+          currentNotificationsTransition={this.props.currentNotificationsTransition}
+          notifications={this.props.notifications}
+          currentNotifications={this.props.currentNotifications}
+         />
       </div>
     );
   }
