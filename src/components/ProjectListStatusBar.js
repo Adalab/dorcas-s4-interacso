@@ -1,16 +1,6 @@
 import React from "react";
-import Env from "../data/.env.json";
 
 class ProjectListStatusBar extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  componentDidMount() {
-    this.props.retrieveFromApi("projects").then(apiResponse => {
-      this.props.updateState({projectsdata: apiResponse.data[0]})
-    });
-  }
-
   render() {
     const projects= this.props.projectsdata;
     return (

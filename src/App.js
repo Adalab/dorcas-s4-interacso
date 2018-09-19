@@ -7,17 +7,22 @@ import Env from './data/.env.json';
 import './App.css';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.compact.css';
+import moment from "moment";
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.apiService= 'https://databoards-api.interacso.com/';
-    this.state= {
+    this.apiService = 'https://databoards-api.interacso.com/';
+    this.milisecondsInADay= 86400000;
+    this.state = {
       currentDataboard: 0,
       currentTransition: "0.5s",
       currentSlideLeft: "0",
-      totalDataboards: 5,
+      totalDataboards: 4,
       datesToPrint: [],
+      calendarResponseApi: [],
+      projectsResponseApi: [],
+      teamResponseApi: [],
       calendarLoaded: false,
       projectsdata: [],
       projectsCharts: [],
@@ -27,15 +32,57 @@ class App extends Component {
       tasksWinner: {},
       commitsWinner: {},
       averageTask: 0,
-      averageCommits: 0
+      averageCommits: 0,
+      projectHours: {},
+      projectCommits: 0,
+      projectTasks: {},
+      projects: [],
+      refreshTime: 15000,
+      notificationsRefreshTime: 30000,
+      notifications: []
     }
-    this.showNextDashboard= this.showNextDashboard.bind(this);
+    if (
+      typeof this.state.datesToPrint !== 'undefined' &&
+      this.state.datesToPrint.length === 0
+    ) {
+      this.getCalendarDates(this.state.datesToPrint);
+    }
+    this.showNextDashboard = this.showNextDashboard.bind(this);
     this.retrieveFromApi = this.retrieveFromApi.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.formatDate = this.formatDate.bind(this);
+    this.loadNotifications = this.loadNotifications.bind(this);
   }
 
   componentDidMount() {
-    this.effect= setInterval(this.showNextDashboard, 3000);
+    this.loadNotifications();
+    this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
+    setInterval(this.loadNotifications, this.state.notificationsRefreshTime);
+    setInterval(this.animateNotifications, this.state.rotateNotifications);
+    this.retrieveFromApi("projects/list").then(projectListJson => {
+      if (typeof projectListJson !== "undefined") {
+        this.setState({
+          totalDataboards: this.state.totalDataboards + projectListJson.total,
+          projects: projectListJson.data
+        });
+      }
+    });
+    this.retrieveFromApi("calendar").then(calendarJson => {
+      if (typeof calendarJson !== "undefined") {
+        this.setDatesNotifications(calendarJson);
+      }
+    });
+    this.retrieveFromApi("projects").then(projectsResponseApi => {
+      this.saveCommitsAndHours(projectsResponseApi);
+    });
+    this.retrieveFromApi("projects").then(projectsResponseApi => {
+      this.updateState({projectsdata: projectsResponseApi.data[0]})
+    });
+    this.retrieveFromApi("team").then(teamResponseApi => {
+      this.getAverage(teamResponseApi);
+      this.getTasksWinner(teamResponseApi);
+      this.getCommitsWinner(teamResponseApi);
+    });
   }
 
   updateState(object) {
@@ -43,7 +90,7 @@ class App extends Component {
   }
 
   retrieveFromApi(endpoint) {
-    if(typeof Env !== "undefined" & Env.token !== "undefined") {
+    if (typeof Env !== "undefined" & Env.token !== "undefined") {
       return fetch(
         this.apiService + endpoint,
         {
@@ -56,78 +103,283 @@ class App extends Component {
           }
         }
       ).then(response => {
-        if(response.status === 401){
+        if (response.status === 401) {
           throw Error(response.statusText);
         } else {
           return response.json();
         }
       }
-      ).then(json => {
-        return json;
-      }).catch(error => {
-        alert("El token es incorrecto");
-        console.error(error);
-      });
-    } else {
-      alert("No está usted autorizado");
-      return null;
+    ).then(json => {
+      return json;
+    }).catch(error => {
+      alert("El token es incorrecto");
+      console.error(error);
+    });
+  } else {
+    alert("No está usted autorizado");
+    return null;
+  }
+}
+
+showNextDashboard() {
+  if (this.state.currentDataboard === this.state.totalDataboards - 1) {
+    clearInterval(this.effect);
+    this.setState({
+      currentDataboard: 0,
+      currentSlideLeft: "0",
+      currentTransition: "none"
+    });
+
+    this.effect= setInterval(this.showNextDashboard, this.state.refreshTime);
+
+  } else {
+    this.setState({
+      currentDataboard: this.state.currentDataboard + 1,
+    });
+    const newSlide = this.state.currentDataboard * -100;
+    this.setState({
+      currentSlideLeft: `${newSlide}%`,
+      currentTransition: "0.5s"
+    })
+  }
+}
+//calendar
+getCalendarDates(datesToPrint) {
+  let calendarDate= this.calculateStartDate();
+  let weekDays= 0;
+  for (let i = 0; i < 20; i++) {
+    datesToPrint.push(
+      {
+        date: this.formatDate(calendarDate),
+        dateObject: calendarDate,
+        label: calendarDate.getDate(),
+        events: [],
+        deadlines: []
+      })
+      calendarDate= this.incrementDaysInMiliseconds(calendarDate, 1);
+      if (weekDays === 4){
+        calendarDate= this.incrementDaysInMiliseconds(calendarDate, 2);
+        weekDays= 0;
+      } else {
+        weekDays++;
+      }
     }
+    this.setState({
+      datesToPrint: datesToPrint
+    });
   }
 
-  showNextDashboard(){
-    if (this.state.currentDataboard == this.state.totalDataboards - 1) {
-      clearInterval(this.effect);
-      this.setState({
-        currentDataboard: 0,
-        currentSlideLeft: "0",
-        currentTransition: "none"
-      });
+  formatDate(date) {
+    const month= ('0' + (date.getMonth() + 1)).slice(-2);
+    const day= ('0' + date.getDate()).slice(-2);
+    return date.getFullYear() + '-' + month + '-' + day;
+  }
 
-      this.effect= setInterval(this.showNextDashboard, 3000);
-
-    } else {
-      this.setState({
-        currentDataboard: this.state.currentDataboard + 1,
+  setDatesNotifications(json) {
+    const datesToPrint = this.state.datesToPrint;
+    const apiResponse = json.data;
+    datesToPrint.forEach((dateToPrint, index) => {
+      apiResponse.forEach(dayFromApi => {
+        if (dayFromApi.datecalendar === dateToPrint.date) {
+          if (dayFromApi.datetype === 'event') {
+            dateToPrint.events.push(dayFromApi.text);
+          }
+          if (dayFromApi.datetype === 'deadline') {
+            dateToPrint.deadlines.push({
+              "text": dayFromApi.text,
+              "completed": dayFromApi.completed
+            });
+          }
+        }
       });
-      const newSlide= this.state.currentDataboard * -100;
-      this.setState({
-        currentSlideLeft: `${newSlide}%`,
-        currentTransition: "0.5s"
-      })
+      datesToPrint[index]= dateToPrint;
+    });
+    this.setState ({
+      datesToPrint: datesToPrint
+    });
+  }
+
+  incrementDaysInMiliseconds(date, numDays) {
+    const totalMiliseconds= this.milisecondsInADay * numDays;
+    return new Date(date.getTime() + totalMiliseconds);
+  }
+
+  calculateStartDate() {
+    const today= new Date();
+    const mondayPastWeek= (today.getDay() - 1) + 7;
+    const mondayPastWeekMiliseconds= this.milisecondsInADay * mondayPastWeek;
+    const miliseconds= today.getTime() - mondayPastWeekMiliseconds;
+    const startDate= new Date(miliseconds);
+    return startDate;
+  }
+
+  //NOTIFICACIONES
+  loadNotifications() {
+    const filterTime = 1800000000000000;
+    this.retrieveFromApi('notifications').then(projectListJson => {
+      const orderedNotifications = projectListJson.data.sort((c1, c2) =>
+      moment(c1.created_at) < (c2.created_at)
+    );
+    const doneNotifications = [];
+    orderedNotifications.forEach((notification) => {
+      if (moment().diff(moment(notification.created_at)) > filterTime) {
+        return;
+      }
+      doneNotifications.push({
+        category: notification.category,
+        text: notification.text,
+        from: moment(notification.created_at).fromNow(),
+      });
+    });
+    this.setState({
+      notifications: doneNotifications
+    });
+    });
+  }
+
+  //PROJECTS
+
+  saveCommitsAndHours(projectsResponseApi) {
+    const projectsData= [];
+    for (var elemento in projectsResponseApi.data[0].commitRank) {
+      projectsData.push({
+        projectName: elemento,
+        commits: projectsResponseApi.data[0].commitRank[elemento]
+      });
     }
+    this.updateState({
+      projectsCharts: projectsData
+    });
+    const hoursData= [];
+    for (var hoursProject in projectsResponseApi.data[0].hourRank) {
+      hoursData.push({
+        hoursName: hoursProject,
+        time: projectsResponseApi.data[0].hourRank[hoursProject]
+      });
+    }
+    this.updateState({
+      hoursCharts: hoursData
+    });
+  }
+
+  //TEAM
+
+  getAverage(json) {
+    let teamData= [];
+    let memberPicsData= [];
+    let averageCommits= 0;
+    let averageTask= 0;
+    json.data.forEach(person => {
+      averageCommits= averageCommits + person.commits
+      averageTask= averageTask + person.tasks
+      teamData.push({
+        member: person.nombre,
+        tasks: person.tasks,
+        commits: person.commits
+      });
+      memberPicsData.push(person.photo);
+    });
+    this.updateState({
+      weekChartData: teamData,
+      memberPics: memberPicsData,
+      averageTask: averageTask/json.data.length,
+      averageCommits: averageCommits/json.data.length
+    })
+  }
+
+  getTasksWinner(json) {
+    let maxTasks= 0;
+    let winnerTasksObj= {};
+    for (let i = 0; i < json.data.length; i++) {
+      if (json.data[i].tasks > maxTasks) {
+        maxTasks= json.data[i].tasks;
+        winnerTasksObj= json.data[i];
+      }
+    }
+    this.updateState({
+      tasksWinner: winnerTasksObj,
+    });
+  }
+
+  getCommitsWinner(json) {
+    let maxCommits= 0;
+    let winnerCommitsObj= {};
+    json.data.forEach(peopleData => {
+      if (peopleData.commits > maxCommits) {
+        maxCommits= peopleData.commits;
+        winnerCommitsObj= peopleData;
+      }
+    });
+    this.setState({
+      commitsWinner: winnerCommitsObj,
+    });
   }
 
   render() {
-    const sliderStyles= {
+    const sliderStyles = {
       left: this.state.currentSlideLeft,
       transition: this.state.currentTransition
     }
     return (
-      <div className= "visor" style={sliderStyles}>
-        <Calendar datesToPrint={this.state.datesToPrint}
+      <div className="visor" style={sliderStyles}>
+
+        <Calendar
+          milisecondsInADay={this.milisecondsInADay}
+          datesToPrint={this.state.datesToPrint}
           calendarLoaded={this.state.calendarLoaded}
-          updateState={this.updateState}           retrieveFromApi={this.retrieveFromApi}
-         />
-        <Projects projectsdata= {this.state.projectsdata}
+          calendarResponseApi={this.state.calendarResponseApi}
+          updateState={this.updateState}
+          retrieveFromApi={this.retrieveFromApi}
+          formatDate={this.formatDate}
+        />
+
+        <Projects projectsdata={this.state.projectsdata}
           projectsCharts={this.state.projectsCharts}
           hoursCharts={this.state.hoursCharts}
           updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
+          notifications={this.state.notifications}
+          currentNotifications={this.state.currentNotifications}
         />
-        <ProjectDetail />
-        <Team weekChartData={this.state.weekChartData}
+
+        {this.state.projects.map((project, index) =>
+          <ProjectDetail
+            key={"projectDetail_" + index}
+            projectHours={this.state.projectHours}
+            projectCommits={this.state.projectCommits}
+            projectTasks={this.state.projectTasks}
+            updateState={this.updateState}
+            retrieveFromApi={this.retrieveFromApi}
+            projectId={project.gid}
+            projectName={project.name}
+            notifications={this.state.notifications}
+            currentNotifications={this.state.currentNotifications}
+          />
+        )}
+
+        <Team
+          teamResponseApi={this.state.teamResponseApi}
+          weekChartData={this.state.weekChartData}
           memberPics={this.state.memberPics}
           tasksWinner={this.state.tasksWinner}
           commitsWinner={this.state.commitsWinner}
           averageTask={this.state.averageTask}
           averageCommits={this.state.averageCommits}
-          updateState={this.updateState}           retrieveFromApi={this.retrieveFromApi}
-        />
-        <Calendar datesToPrint={this.state.datesToPrint}
-          calendarLoaded={this.state.calendarLoaded}
           updateState={this.updateState}
           retrieveFromApi={this.retrieveFromApi}
-         />
+          notifications={this.state.notifications}
+          currentNotifications={this.state.currentNotifications}
+        />
+
+        <Calendar
+          milisecondsInADay={this.milisecondsInADay}
+          datesToPrint={this.state.datesToPrint}
+          calendarLoaded={this.state.calendarLoaded}
+          calendarResponseApi={this.state.calendarResponseApi}
+          updateState={this.updateState}
+          retrieveFromApi={this.retrieveFromApi}
+          formatDate={this.formatDate}
+        />
       </div>
     );
   }

@@ -16,6 +16,10 @@
 .day__container {
   background-color: $calendarDayContainer;
   padding: 25px;
+  box-sizing: border-box;
+}
+.day__container--today {
+  border: 10px solid $selectedDay;
 }
 .day__container--with-event {
   border-bottom: solid 10px $eventDetail;
@@ -25,7 +29,32 @@
   color: $futureEvent;
   display: inline-block;
   vertical-align: bottom;
-  overflow: auto;
+}
+.notifications__container--events {
+  height: 50px;
+}
+.notifications__container--deadlines {
+  height: 50px;
+}
+.day__notifications-event {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+.day__notifications-deadline {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+.opacity-off {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.display-off {
+  display: none;
+}
+.day__label--today {
+  color: $selectedDay;
 }
 .day__notifications-deadline--completed {
   color: $deadlineFinished;
@@ -45,6 +74,8 @@
   display: inline-block;
   border-radius: 50%;
   margin-right: 10px;
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 .deadline__point--completed {
   background-color: $deadlineFinished;

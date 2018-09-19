@@ -1,17 +1,27 @@
 .footer__container {
   display: grid;
   grid-template-columns: 0.22fr 0.78fr;
+  grid-template-rows: 70px;
   margin-top: 30px;
   color: $titles;
   font-family: $montserrat, $sansSe;
-  height: 70px;
+  overflow: hidden;
+  // height: 70px;
 }
+
+.footer__notif--container {
+  position: relative;
+  top: 0;
+  transition: all 0.5s ease 0s;
+}
+
 .footer__notif-details {
   display: grid;
   grid-template-columns: 0.22fr 0.56fr 0.22fr;
   align-items: center;
   padding-left: 32px;
   background-color: $footerDetails;
+  height: 70px;
 }
 .footer__bell{
   text-align: center;
