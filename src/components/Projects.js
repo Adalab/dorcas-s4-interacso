@@ -18,7 +18,6 @@ class Projects extends React.Component {
       <div className = "projects__container databoard">
         <Header title = {this.texts.title} />
         <ProjectListStatusBar projectsdata = {this.props.projectsdata}
-          updateState = {this.props.updateState}
           retrieveFromApi = {this.props.retrieveFromApi}
         />
         <div className = "statistics__chart">
