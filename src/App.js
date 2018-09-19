@@ -20,7 +20,6 @@ class App extends Component {
       currentSlideLeft: "0",
       totalDataboards: 4,
       datesToPrint: [],
-      calendarResponseApi: [],
       projectsResponseApi: [],
       teamResponseApi: [],
       projectsdata: [],
@@ -39,9 +38,6 @@ class App extends Component {
       refreshTime: 15000,
       notificationsRefreshTime: 30000,
       notifications: []
-    }
-    if (typeof this.state.datesToPrint !== 'undefined' && this.state.datesToPrint.length === 0) {
-      this.getCalendarDates(this.state.datesToPrint);
     }
     this.showNextDashboard = this.showNextDashboard.bind(this);
     this.retrieveFromApi = this.retrieveFromApi.bind(this);
@@ -64,7 +60,11 @@ class App extends Component {
     });
     this.retrieveFromApi("calendar").then(calendarJson => {
       if (typeof calendarJson !== "undefined") {
-        this.setDatesNotifications(calendarJson);
+        let calendarDates = this.getCalendarDates();
+        calendarDates = this.setDatesNotifications(calendarDates, calendarJson);
+        this.setState({
+          datesToPrint: calendarDates
+        });
       }
     });
     this.retrieveFromApi("projects").then(projectsResponseApi => {
@@ -133,7 +133,8 @@ showNextDashboard() {
   }
 }
 //calendar
-getCalendarDates(datesToPrint) {
+getCalendarDates() {
+  let datesToPrint = [];
   let calendarDate = this.calculateStartDate();
   let weekDays = 0;
   for (let i = 0; i < 20; i++) {
@@ -153,9 +154,7 @@ getCalendarDates(datesToPrint) {
         weekDays++;
       }
     }
-    this.setState({
-      datesToPrint: datesToPrint
-    });
+    return datesToPrint;
   }
 
   formatDate(date) {
@@ -164,8 +163,7 @@ getCalendarDates(datesToPrint) {
     return date.getFullYear() + '-' + month + '-' + day;
   }
 
-  setDatesNotifications(json) {
-    const datesToPrint = this.state.datesToPrint;
+  setDatesNotifications(datesToPrint, json) {
     const apiResponse = json.data;
     datesToPrint.forEach((dateToPrint, index) => {
       apiResponse.forEach(dayFromApi => {
@@ -183,9 +181,7 @@ getCalendarDates(datesToPrint) {
       });
       datesToPrint[index] = dateToPrint;
     });
-    this.setState ({
-      datesToPrint: datesToPrint
-    });
+    return datesToPrint;
   }
 
   incrementDaysInMiliseconds(date, numDays) {
@@ -315,8 +311,6 @@ getCalendarDates(datesToPrint) {
         <Calendar
           milisecondsInADay = {this.milisecondsInADay}
           datesToPrint = {this.state.datesToPrint}
-          calendarResponseApi = {this.state.calendarResponseApi}
-          retrieveFromApi = {this.retrieveFromApi}
           formatDate = {this.formatDate}
         />
 
@@ -358,8 +352,6 @@ getCalendarDates(datesToPrint) {
         <Calendar
           milisecondsInADay = {this.milisecondsInADay}
           datesToPrint = {this.state.datesToPrint}
-          calendarResponseApi = {this.state.calendarResponseApi}
-          retrieveFromApi = {this.retrieveFromApi}
           formatDate = {this.formatDate}
         />
       </div>
