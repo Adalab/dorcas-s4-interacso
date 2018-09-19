@@ -9,7 +9,7 @@ class Calendar extends React.Component {
       title: "Calendario"
     }
   }
-  
+
   render() {
     return (
       <div className = "databoard">
@@ -18,10 +18,8 @@ class Calendar extends React.Component {
           identifier = {this.props.identifier}
           milisecondsInADay = {this.props.milisecondsInADay}
           datesToPrint = {this.props.datesToPrint}
-          calendarLoaded = {this.props.calendarLoaded}
           calendarResponseApi = {this.props.calendarResponseApi}
           setDatesNotifications = {this.props.setDatesNotifications}
-          updateState = {this.props.updateState}
           retrieveFromApi  = {this.props.retrieveFromApi}
           formatDate = {this.props.formatDate}
         />
