@@ -10,10 +10,10 @@ class TableCalendar extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.animationStarted === false) {
-      const withEvents = this.calendarContainer.current.querySelectorAll(
-        ".day__container--with-event"
-      );
+    const withEvents = this.calendarContainer.current.querySelectorAll(
+      ".day__container--with-event"
+    );
+    if (this.state.animationStarted === false && withEvents.length > 0) {
       withEvents.forEach(withEvent => {
         const notificationEvents = withEvent.querySelectorAll(
           ".day__notifications-event"
@@ -33,9 +33,9 @@ class TableCalendar extends React.Component {
           this.animate(notificationDeadline);
         }
       });
-      // this.setState({
-      //   animationStarted: true
-      // });
+      this.setState({
+        animationStarted: true
+      });
     }
   }
 

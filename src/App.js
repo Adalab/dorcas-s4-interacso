@@ -23,7 +23,6 @@ class App extends Component {
       calendarResponseApi: [],
       projectsResponseApi: [],
       teamResponseApi: [],
-      calendarLoaded: false,
       projectsdata: [],
       projectsCharts: [],
       hoursCharts: [],
@@ -46,7 +45,6 @@ class App extends Component {
     }
     this.showNextDashboard = this.showNextDashboard.bind(this);
     this.retrieveFromApi = this.retrieveFromApi.bind(this);
-    this.updateState = this.updateState.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.loadNotifications = this.loadNotifications.bind(this);
   }
@@ -73,17 +71,13 @@ class App extends Component {
       this.saveCommitsAndHours(projectsResponseApi);
     });
     this.retrieveFromApi("projects").then(projectsResponseApi => {
-      this.updateState({projectsdata: projectsResponseApi.data[0]})
+      this.setState({projectsdata: projectsResponseApi.data[0]})
     });
     this.retrieveFromApi("team").then(teamResponseApi => {
       this.getAverage(teamResponseApi);
       this.getTasksWinner(teamResponseApi);
       this.getCommitsWinner(teamResponseApi);
     });
-  }
-
-  updateState(object) {
-    this.setState(object);
   }
 
   retrieveFromApi(endpoint) {
@@ -242,7 +236,7 @@ getCalendarDates(datesToPrint) {
         commits: projectsResponseApi.data[0].commitRank[elemento]
       });
     }
-    this.updateState({
+    this.setState({
       projectsCharts: projectsData
     });
     const hoursData = [];
@@ -252,7 +246,7 @@ getCalendarDates(datesToPrint) {
         time: projectsResponseApi.data[0].hourRank[hoursProject]
       });
     }
-    this.updateState({
+    this.setState({
       hoursCharts: hoursData
     });
   }
@@ -274,7 +268,7 @@ getCalendarDates(datesToPrint) {
       });
       memberPicsData.push(person.photo);
     });
-    this.updateState({
+    this.setState({
       weekChartData: teamData,
       memberPics: memberPicsData,
       averageTask: averageTask/json.data.length,
@@ -291,7 +285,7 @@ getCalendarDates(datesToPrint) {
         winnerTasksObj = json.data[i];
       }
     }
-    this.updateState({
+    this.setState({
       tasksWinner: winnerTasksObj,
     });
   }
@@ -321,9 +315,7 @@ getCalendarDates(datesToPrint) {
         <Calendar
           milisecondsInADay = {this.milisecondsInADay}
           datesToPrint = {this.state.datesToPrint}
-          calendarLoaded = {this.state.calendarLoaded}
           calendarResponseApi = {this.state.calendarResponseApi}
-          updateState = {this.updateState}
           retrieveFromApi = {this.retrieveFromApi}
           formatDate = {this.formatDate}
         />
@@ -331,7 +323,6 @@ getCalendarDates(datesToPrint) {
         <Projects projectsdata = {this.state.projectsdata}
           projectsCharts = {this.state.projectsCharts}
           hoursCharts = {this.state.hoursCharts}
-          updateState = {this.updateState}
           retrieveFromApi = {this.retrieveFromApi}
           notifications = {this.state.notifications}
           currentNotifications = {this.state.currentNotifications}
@@ -343,7 +334,6 @@ getCalendarDates(datesToPrint) {
             projectHours = {this.state.projectHours}
             projectCommits = {this.state.projectCommits}
             projectTasks = {this.state.projectTasks}
-            updateState = {this.updateState}
             retrieveFromApi = {this.retrieveFromApi}
             projectId = {project.gid}
             projectName = {project.name}
@@ -360,7 +350,6 @@ getCalendarDates(datesToPrint) {
           commitsWinner = {this.state.commitsWinner}
           averageTask = {this.state.averageTask}
           averageCommits = {this.state.averageCommits}
-          updateState = {this.updateState}
           retrieveFromApi = {this.retrieveFromApi}
           notifications = {this.state.notifications}
           currentNotifications = {this.state.currentNotifications}
@@ -369,9 +358,7 @@ getCalendarDates(datesToPrint) {
         <Calendar
           milisecondsInADay = {this.milisecondsInADay}
           datesToPrint = {this.state.datesToPrint}
-          calendarLoaded = {this.state.calendarLoaded}
           calendarResponseApi = {this.state.calendarResponseApi}
-          updateState = {this.updateState}
           retrieveFromApi = {this.retrieveFromApi}
           formatDate = {this.formatDate}
         />
