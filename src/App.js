@@ -268,8 +268,8 @@ getCalendarDates() {
     this.setState({
       weekChartData: teamData,
       memberPics: memberPicsData,
-      averageTask: averageTask/json.data.length,
-      averageCommits: averageCommits/json.data.length
+      averageTask: (averageTask/json.data.length) / 7,
+      averageCommits: (averageCommits/json.data.length) / 7
     })
   }
 

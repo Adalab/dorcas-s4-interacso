@@ -21,7 +21,7 @@ const series =
 
 const size =
 {
-  height: 12
+  height: 120
 }
 
 const axisSettings =
